@@ -38,7 +38,7 @@ const App = () => {
         <Route exact path="/Spells" component={Spells}></Route>
         <Route
           exact
-          path="/SpellDetails:index"
+          path="/SpellDetails/:index"
           component={SpellDetails}
         ></Route>
         <Route exact path="/Equipment" component={Equipment}></Route>

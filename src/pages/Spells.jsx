@@ -27,11 +27,7 @@ const Spells = () => {
           return (
             <>
               <a href={`/SpellDetails/${spell.index}`}>
-                <Spell
-                  key={spell.index}
-                  name={spell.name}
-                  index={spell.index}
-                />
+                <Spell key={spell.url} name={spell.name} index={spell.index} />
               </a>
             </>
           )
