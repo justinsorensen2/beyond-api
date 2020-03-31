@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const SpellDetails = (props) => {
+  const index = props.match.params.index
   //set var based on data passed from clicking on individual spell
   const [spell, setSpell] = useState({})
 
@@ -18,7 +19,7 @@ const SpellDetails = (props) => {
   //poll api on page load
   useEffect(() => {
     getSpell()
-  }, [])
+  }, [index])
 
   // const name = spell.name
   // const desc = spell.desc

@@ -18,23 +18,31 @@ const Spells = () => {
     getSpells()
   }, [])
 
-  //render spells page
-  return (
-    <div>
-      <h1>SPELLS</h1>
-      <ul className="Spells">
-        {spells.map((spell) => {
-          return (
-            <>
-              <a href={`/SpellDetails/${spell.index}`}>
-                <Spell key={spell.url} name={spell.name} index={spell.index} />
-              </a>
-            </>
-          )
-        })}
-      </ul>
-    </div>
-  )
+  if (!spells) {
+    return <div> Loading...</div>
+  } else {
+    //render spells page
+    return (
+      <div>
+        <h1>SPELLS</h1>
+        <ul className="Spells">
+          {spells.map((spell) => {
+            return (
+              <>
+                <a href={`SpellDetails/${spell.index}`}>
+                  <Spell
+                    key={spell.url}
+                    name={spell.name}
+                    index={spell.index}
+                  />
+                </a>
+              </>
+            )
+          })}
+        </ul>
+      </div>
+    )
+  }
 }
 
 export default Spells
