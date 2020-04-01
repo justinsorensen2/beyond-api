@@ -1,14 +1,16 @@
 import React from 'react'
 
 const CastClass = (props) => {
-  const baseURL = 'http://www.dnd5eapi.co/'
   const { name, url } = props
+  const fullURL = `http://www.dnd5eapi.co${url}`
   return (
     <li className="CastClass">
-      <p>Class Name: {name}</p>
-      <a>
-        `${baseURL}${url}`
-      </a>
+      <h5>
+        Class Name: <span>{name}</span>
+      </h5>
+      <h5>
+        <a href={fullURL}>http://www.dnd5eapi.co{url}</a>
+      </h5>
     </li>
   )
 }

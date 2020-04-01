@@ -6,17 +6,21 @@ const SpellDetails = (props) => {
   const index = props.match.params.index
   //set var based on data passed from clicking on individual spell
   const [spell, setSpell] = useState()
+  //set var for the classes sub-component of spell obj
   const [castClass, setCastClass] = useState()
+  //set var for the components sub-component of spell obj
+  const [spellComponents, setSpellComponents] = useState()
 
   //set var for base api url
   const baseURL = 'http://www.dnd5eapi.co/api/spells/'
 
-  //poll api for individual spell data
+  //poll api for individual spell data and sub-components
   const getSpell = async () => {
     const resp = await axios.get(`${baseURL}${index}`)
     console.log(resp.data)
     setSpell(resp.data)
     setCastClass(resp.data.classes)
+    setSpellComponents(resp.data.components)
   }
 
   //poll api on page load
@@ -25,7 +29,11 @@ const SpellDetails = (props) => {
   }, [index])
 
   //render
-  if (!spell && !castClass) {
+  if (!spell) {
+    return <div>Loading...</div>
+  } else if (!castClass) {
+    return <div>Loading...</div>
+  } else if (!spellComponents) {
     return <div>Loading...</div>
   } else {
     //set var for value of concentration
@@ -42,7 +50,21 @@ const SpellDetails = (props) => {
     } else {
       ritualValue = 'No'
     }
-    const classArr = castClass
+    //set var for value of higher_level
+    let higherLevelValue = ''
+    if (!spell.higher_level) {
+      higherLevelValue = 'Not Applicable'
+    } else {
+      higherLevelValue = spell.higher_level
+    }
+    //set var for material component
+    let materialValue = ''
+    if (!spell.material) {
+      materialValue = 'Not Applicable'
+    } else {
+      materialValue = spell.material
+    }
+
     return (
       <div>
         <h3>
@@ -73,16 +95,25 @@ const SpellDetails = (props) => {
           Description: <span>{spell.desc}</span>
         </h5>
         <h5>
-          Cast at Higher Level: <span>{spell.higher_level}</span>
+          Cast at Higher Level: <span>{higherLevelValue}</span>
+        </h5>
+        <h5>Components:</h5>
+        <h5 classname="SpellComponents">
+          {spellComponents.map((spellComponent) => (
+            <li>{spellComponent}</li>
+          ))}
+        </h5>
+        <h5>
+          Material: <span>{materialValue}</span>
         </h5>
         <h5>Classes Which Can Cast:</h5>
-        {classArr.map((castClass) => {
+        {castClass.map((classes) => {
           return (
             <>
               <CastClass
-                key={castClass.name}
-                name={castClass.name}
-                url={castClass.url}
+                key={classes.name}
+                name={classes.name}
+                url={classes.url}
               />
             </>
           )
